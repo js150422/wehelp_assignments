@@ -1,0 +1,80 @@
+.line1{
+    display:flex;                                               /*容器中的項目並排*/
+}
+.title{
+    flex:none;width:150px;                                      /*無彈性，大小固定*/
+    justify-content:flex-end;                                   /*靠左邊*/
+    font-size:20px;                             
+    font-weight: bold;                          
+}
+.menu{
+    flex:auto;                                                   /*有彈性*/
+    display: flex;justify-content:flex-end;                      /*容器內水平靠右*/ 
+    align-items: center;                                         /*容器內垂直置中*/                
+    font-size:20px;
+
+    }
+.item{
+    margin-left:10px;                                           /*選單邊界左邊10px*/
+    margin-right:10px;                                          /*選單邊界右邊10px*/
+}
+.welcome{
+    display:flex;justify-content:center;align-items:center;     /*完美置中*/
+    height: 300px;
+    font-size:40px;                                                     
+    background-color: lightblue;            
+    font-weight: bold;                     
+}
+.bigbox{
+    display:flex;justify-content:center;
+}
+
+.box{
+    width:1200px;
+    display:flex;justify-content:center;
+}        
+.table{ 
+    margin-top: 20px;                                           /*table的上邊界10px*/                                             
+    display:flex;justify-content:center;                      /*table容器內scenic的4個*/
+                                              
+}
+.scenic{          
+    flex-direction:column;                                      /*資料往下面放*/ 
+    margin-top: 20px;
+
+                             
+}
+.scenic img{
+    max-width: 90%;                                             /*自動配合區域調整顯示90%*/  
+    display: block;                                             /*元素的顯示型態被設定為區塊元素，改成inline卻分開，選擇用block*/
+    display:flex;justify-content:center;
+    margin: auto;
+}
+.text{  
+    width:90%;   
+    text-align: center;                                         /*文字置中*/
+    font-size:20px;
+    background:lightblue;
+    padding-top: 10px;                                          /*文字上行距10px*/
+    padding-bottom: 10px;                                       /*文字下行距10px*/
+    display:flex;justify-content:center;
+    margin: auto;
+}
+.newmenu img{
+   display:none;                                                /*item縮圖不顯示*/
+}
+
+@media(max-width:600px) {
+.box{flex-wrap:wrap;}        
+.table{flex-wrap:wrap;}
+.item{display:none;} 
+
+.newmenu img{
+        display:inline;
+        width:20px;
+        justify-content:flex-end;
+    }
+}
+@media (max-width:1200px) and (min-width:601px) {
+.box{width:auto;flex-wrap:wrap;}  
+}
