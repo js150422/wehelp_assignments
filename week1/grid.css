@@ -38,13 +38,15 @@
     grid-template-areas:
         "p p p p"
         "p p p p";
+    justify-content: center;
 
     
 }
-
+.p{margin: auto;}
 .p img{
     max-width: 90%;
     display: block;
+    margin: auto;
 }
 .t{
     max-width: 90%;
@@ -53,6 +55,7 @@
     text-align: center;
     padding-top: 10px;                                          /*文字上行距10px*/
     padding-bottom: 10px;                                       /*文字下行距10px*/
+    margin: auto;
 
 
 }
@@ -63,6 +66,7 @@
  
 @media (max-width:1200px) and (min-width:601px) {
 
+   
     .grid{
         
         grid-template-columns: 49% 49%;
@@ -72,8 +76,10 @@
         "p p"
         "p p"
         "p p";
+        justify-content: center;
     }
 
+    .p{margin: auto;}
     .p img{margin:auto ;}
     .t{margin:auto ;}
 }
@@ -91,9 +97,11 @@
         "p"
         "p"
         "p"
-        "p"
+        "p";
+        justify-content: center;
     
     }
+    .p{margin: auto;}
     .p img{margin: auto;}
     .t{margin:auto ;}
 
