@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8" />
+<script type="text/javascript">
+    /*第一題*/
+    function calculate(min, max){
+    sum=0
+    for (min;min<=max;min++){sum=sum+min}       
+    console.log(sum);
+    }
+    calculate(1, 3); // 你的程式要能夠計算 1+2+3，最後印出 6
+    calculate(4, 8); // 你的程式要能夠計算 4+5+6+7+8，最後印出 30
+
+    /*第二題*/
+    function avg(data){
+        let sum = 0  
+        for(i=0;i<data.employees.length;i++){
+            sum=sum+data.employees[i].salary
+        }
+        console.log(sum/data.employees.length)
+    }
+    avg({"count":3,"employees":[
+    {"name":"John","salary":30000},
+    {"name":"Bob", "salary":60000},
+    {"name":"Jenny","salary":50000}]}); 
+    
+
+    /* 第三題 */
+    function maxProduct(nums){
+        let count=[]
+        for(i=0;i<nums.length;i++){
+            for(j=0;j<nums.length;j++){
+                if (i!=j){
+                    count.push(nums[i]*nums[j]) //將乘好的數字放入陣列
+                }
+            }    
+        }
+        console.log(Math.max.apply(null,count))
+        /*Math.max() 並利用 apply 的特性，
+        將 numArray 陣列解構成一個一個的參數給
+         Math.max 去執行，藉此找到陣列中的最大值。*/
+    }       
+    maxProduct([5, 20, 2, 6]) // 得到 120
+    maxProduct([10, -20, 0, 3]) // 得到 30
+    maxProduct([-1, 2]) // 得到 -2
+    maxProduct([-1, 0, 2]) // 得到 0
+    maxProduct([-1, -2, 0]) // 得到 2
+
+    /*第四題*/
+    function twoSum(nums, target){
+        let count=[]
+        for (i=0;i<nums.length;i++){
+            for (j=0;j<nums.length;j++){
+                if(i!=j){
+                    var x=0;
+                    x=nums[i]+nums[j]
+                    if(x==target){
+                        return [[i],[j]]
+                    }
+                }
+            }
+        }
+    }
+    let result=twoSum([2, 11, 7, 15], 9);
+    console.log(result);
+
+    /* Optional */
+    function maxZeros(nums){
+       var max_time=0;
+       var cur_time=0;
+       var pre_element=null;
+       for(i=0;i<nums.length;i++){
+           if(nums[i]==0){
+                cur_time=cur_time+1
+                max_time=Math.max(cur_time,max_time)
+            }else{
+                pre_element=0
+                cur_time=0
+            }
+        }
+        console.log(max_time)
+    }
+    maxZeros([0, 1, 0, 0]); // 得到 2
+    maxZeros([1, 0, 0, 0, 0, 1, 0, 1, 0, 0]); // 得到 4
+    maxZeros([1, 1, 1, 1, 1]); // 得到 0
+    maxZeros([0, 0, 0, 1, 1]) // 得到 3
+</script>
+<style>
+</style>
+
+<title>Week2 mission</title>
+</head>
+<body>
+ 
+</body>
+</html>
