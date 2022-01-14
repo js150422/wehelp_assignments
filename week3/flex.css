@@ -32,10 +32,10 @@
     flex-wrap:wrap
 }        
 
-.p{margin: 10px;width:21%}
+.p{margin: 10px;width:23%}
 .p img{
     display:flex;justify-content:center;
-    max-width: 90%;
+    max-width: 95%;
     aspect-ratio: 16/9;
     margin: auto;
     
@@ -46,7 +46,7 @@
     font-style:20px;
     align-content:center;
     text-align: center;
-    max-width: 90%;
+    max-width: 95%;
     padding-top: 20px;                                          
     padding-bottom: 20px; 
     margin: auto;                                      
