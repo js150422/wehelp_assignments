@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no"/>
+<!--
+這段程式碼的意思是，讓 viewport 的寬度等於物理裝置上的真實解析度，不允許使用者縮放。
+網頁寬度預設等於螢幕寬度（width=device-width）；
+初始縮放比例（initial-scale=1.0）為 1.0，即網頁初始大小佔螢幕面積的 100%；
+允許使用者縮放到的最小比例（minimum-scale=1.0）為 1.0；
+允許使用者縮放到的最大比例（maximum-scale=1.0）為 1.0；
+不允許使用者手動縮放（user-scalable=no）。
+-->
+<title>RWD Layout</title>
+<head>
+    <link rel="stylesheet" type="text/css" href="flex.css" media="all">
+    <script type="text/javascript" src="flex.js"></script>
+    
+</head>
+<body>
+    <div class="line1">
+        <div class="title">My Website</div>
+        <div class="menu">
+            <div class="item">Item 1</div>
+            <div class="item">Item 2</div>
+            <div class="item">Item 3</div>
+            <div class="item">Item 4</div>
+            <div class="newmenu"><img src="menu.png" /></div>
+        </div>
+    </div>  
+    <div class="welcome">Welcome to MyHome  </div>
+    <div class="big"><div class="box"></div></div>
+    <div class="buttonbox"><button onclick="change()" id="btn">Load More</button></div>
+</body>
+</html>

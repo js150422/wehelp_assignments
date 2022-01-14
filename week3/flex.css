@@ -1,0 +1,74 @@
+.line1{
+    display:flex;                                               /*容器中的項目並排*/
+}
+.title{
+    flex:none;width:150px;                                      /*無彈性，大小固定*/
+    justify-content:flex-end;                                   /*靠左邊*/
+    font-size:20px;                             
+    font-weight: bold;                          
+}
+.menu{
+    flex:auto;                                                   /*有彈性*/
+    display: flex;justify-content:flex-end;                      /*容器內水平靠右*/ 
+    align-items: center;                                         /*容器內垂直置中*/                
+    font-size:20px;
+
+    }
+.item{
+    margin-left:10px;                                           /*選單邊界左邊10px*/
+    margin-right:10px;                                          /*選單邊界右邊10px*/
+}
+.welcome{
+    display:flex;justify-content:center;align-items:center;     /*完美置中*/
+    height: 300px;
+    font-size:40px;                                                     
+    background-color: lightblue;            
+    font-weight: bold;                     
+}
+.big{display:flex;justify-content:center;}
+.box{
+    width:1200px;
+    display:flex;justify-content:center;
+    flex-wrap:wrap
+}        
+
+.p{margin: 20px;width:21%}
+.p img{
+    display:flex;justify-content:center;
+    max-width: 90%;
+    aspect-ratio: 16/9;
+    margin: auto;
+    
+}
+
+.t{
+    background-color:lightblue;
+    font-style:20px;
+    align-content:center;
+    text-align: center;
+    max-width: 90%;
+    padding-top: 20px;                                          
+    padding-bottom: 20px; 
+    margin: auto;                                      
+
+}
+.buttonbox{display: flex;justify-content: center;align-content: center; }
+#np{display: none;}
+.newmenu img{display:none;}
+
+
+@media (max-width:1200px) and (min-width:601px) {
+    .p{width:40%;flex-wrap:wrap;}
+    .p img{width:90%}
+}
+@media(max-width:600px) {
+    .p{width:90%;flex-wrap:wrap;}
+    .p img{width:90%}      
+    .item{display:none;} 
+    
+    .newmenu img{
+            display:inline;
+            width:20px;
+            justify-content:flex-end;
+        }
+    }
