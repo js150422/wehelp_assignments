@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>week4</title>
+    <style>
+    .welcome{display: flex;justify-content:center;align-items: center;background-color:#375476;height:100px;}
+    .login{display: flex;justify-content:center;align-items: center;}
+    .keyin{display: flex;justify-content:center;}
+    .btn{margin-top:10px;display: flex;justify-content:center;}
+    button{width: 50px;height: 30px;}
+    h1{flex:none;color:white;text-align: center;}
+    </style>
+
+</head>
+    
+<body>
+    <div class="welcome"><h1>歡迎光臨，請輸入帳號密碼</h1></div>
+    <div class="login"><h2>登錄系統</h2></div>
+    <div class="keyin">
+        <form action="/signin" method="POST">
+            帳號 <input type="text" name='account'/><br/>
+            密碼 <input type="password" name='key'/><br/>
+            <div class="btn"><button class="btn" >登錄</button></div>    
+        </form>
+        
+    </div>
+
+</body>
+</html>
