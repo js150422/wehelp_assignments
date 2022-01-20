@@ -18,11 +18,11 @@ def singnin():
     key=request.form["key"]
     if account=="test" and key=="test":
         session["account"]=account # session["欄位名稱"]=資料
-        return redirect("/member")
+        return redirect("/member/")
     else:
-        return redirect("/error?msg=帳號或密碼輸入錯誤")
+        return redirect("/error/?msg=帳號或密碼輸入錯誤")
     
-@app.route("/member")
+@app.route("/member/")
 def member():
     account=session.get("account")
     if "account" in session:
@@ -36,7 +36,7 @@ def singout():
 
 
 
-@app.route("/error")
+@app.route("/error/")
 def error():
     message=request.args.get("msg","帳號、或密碼輸入錯誤")
     return render_template("error.html",message=message)
