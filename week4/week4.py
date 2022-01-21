@@ -42,13 +42,8 @@ def singout():
 
 @app.route("/error/")
 def error():
-    if "account" not in session:
         message=request.args.get("msg","請輸入帳號、密碼")
         return render_template("error.html",message=message)
-    else:
-        message=request.args.get("msg","帳號、或密碼輸入錯誤")
-        return render_template("error.html",message=message)
-    
    
 # 啟動伺服器在 Port 3000
 app.run(port=3000) 
