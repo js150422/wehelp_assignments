@@ -47,7 +47,3 @@ password 欄位必須是 test。接著繼續新增至少 4 筆隨意的資料。
 使用 SELECT 搭配 JOIN 語法，取得 member 資料表中欄位 username 是 test 的所有
 留言，資料中須包含留言者會員的姓名。
 ![](https://github.com/js150422/wehelpassignments/week5/Q5-2.jpg)
-
-
-
-
