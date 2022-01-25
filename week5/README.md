@@ -31,8 +31,8 @@ password 欄位必須是 test。接著繼續新增至少 4 筆隨意的資料。
 使用 UPDATE 指令更新欄位 username 是 test 的會員資料，將資料中的 name 欄位
 改成 test2。
 
-![](https://github.com/js150422/wehelpassignments/blob/main/week5/Q3-7-1.jpg?raw=true)
 ![](https://github.com/js150422/wehelpassignments/blob/main/week5/Q3-7-2.jpg?raw=true)
+![](https://github.com/js150422/wehelpassignments/blob/main/week5/Q3-7-1.jpg?raw=true)
 ## Q4-1
 取得 member 資料表中，總共有幾筆資料 ( 幾位會員 )。
 
