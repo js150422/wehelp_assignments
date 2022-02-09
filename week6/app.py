@@ -1,7 +1,7 @@
 import mysql.connector
 from flask import *
 
-db = mysql.connector.connect(host='127.0.0.1',port='3306',user='root',password='',database='member_system')
+db = mysql.connector.connect(user='root',password='',host='localhost',database='member_system')
 cursor = db.cursor()
 
 # 初始化 Flask 伺服器
@@ -29,21 +29,25 @@ def signup():
     name=request.form["name"]
     username=request.form["username"]
     password=request.form["password"]
+    
 
     # 撈sql資料庫
     sql_username = "SELECT username FROM member WHERE username ='%s'"%(username)
     cursor.execute(sql_username)
     result_username = cursor.fetchone()
 
-    # 搜尋註冊的usernam有沒有存在在資料庫裏面
-    if result_username!=None:
-        return redirect("/error?msg=帳號已經被註冊")
-    # 沒有註冊過，新增mysql資料庫
-    sql = "INSERT INTO member (name, username, password) VALUES (%s, %s, %s)"
-    val = (name, username, password)
-    cursor.execute(sql, val)
-    db.commit()
-    return redirect("/")
+    if name!="" and username!="" and password!="":
+        # 搜尋註冊的usernam有沒有存在在資料庫裏面
+        if result_username!=None:
+            return redirect("/error?msg=帳號已經被註冊")
+        # 沒有註冊過，新增mysql資料庫
+        sql = "INSERT INTO member (name, username, password) VALUES (%s, %s, %s)"
+        val = (name, username, password)
+        cursor.execute(sql, val)
+        db.commit()
+        return redirect("/")
+    else:
+        return redirect("/error?msg=請輸入要註冊的帳號密碼")
 
 
 # 登錄
