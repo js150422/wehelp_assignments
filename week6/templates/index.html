@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>會員系統</title>
+    <style>
+        .welcome{
+            display:flex;justify-content:center;align-items: center;
+            background-color:#375476;color:white;font-size: 30px;height:100px;
+        }
+        .keyin{display:flex;justify-content:center;align-items: center;}
+        .login{display:flex;justify-content:center;align-items: center;}
+        h3{display:flex;justify-content:center;align-items: center;}
+        input{font-size: 15px;padding: 15px;margin: 5px;}
+        button{justify-content:center;}
+    </style>
+    
+</head>
+<body>
+    <div class="welcome">歡迎光臨，請註冊會員登錄系統</div>
+    
+    <h3>註冊帳號</h3>
+    <div class="keyin">
+    <form action="/signup" method="POST">
+        姓名 <input type="text" name="name" /><br/>
+        帳號 <input type="text" name="username" /><br/>
+        密碼 <input type="password" name="password" /> <br/>
+        <h3><button>註冊</button></h3>
+    </form>
+    </div>
+    
+    <h3>登入系統</h3>
+    <div class="login">
+    <form action="/signin" method="POST">
+        帳號 <input type="text" name="username" /><br/>
+        密碼 <input type="password" name="password" /> <br/>
+        <h3><button>登入</button></h3>
+    </form>
+    </div>
+</body>
+</html>
