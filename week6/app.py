@@ -1,7 +1,7 @@
 import mysql.connector
 from flask import *
 
-db = mysql.connector.connect(user='root',password='',host='localhost',database='member_system')
+db = mysql.connector.connect(user='root',password='1qaz2wsx',host='localhost',database='member_system')
 cursor = db.cursor()
 
 # 初始化 Flask 伺服器
@@ -36,6 +36,7 @@ def signup():
     cursor.execute(sql_username)
     result_username = cursor.fetchone()
 
+    # 輸入的name跟username不是空值的話
     if name!="" and username!="" and password!="":
         # 搜尋註冊的usernam有沒有存在在資料庫裏面
         if result_username!=None:
@@ -59,41 +60,30 @@ def signin():
 
 
     # 連接資料庫
-    sql_password = "SELECT password FROM member WHERE username ='%s'"%(username)
-    cursor.execute(sql_password)
-    key=cursor.fetchone()
+    sql = "SELECT name,username,password FROM member WHERE username ='%s'"%(username)
+    cursor.execute(sql)
+    data=cursor.fetchall()
+    for user_data in data:
+        name=user_data[0]
+        user=user_data[1]
+        key=user_data[2]
 
-
-    sql_user = "SELECT username FROM member WHERE username ='%s'"%(username)
-    cursor.execute(sql_user)
-    user=cursor.fetchone()
-
-
-
-
-    # 沒輸入就案登錄，提示[請輸入帳號密碼]
-    if username!="" or password!="":
-        # 用密碼撈user撈的到東西，就表示有註冊過，且用密碼撈出來的帳號跟輸入帳號一樣，代表輸入的資訊沒有問題
-        if (key!=None or user!=None)and(user[0]==username and key[0]==password):
-            
+        # 登入的帳號或密碼都要等於資料庫中的資料
+        if user!=username or key!=password:
             # 登入成功，在 Session 記錄會員資訊，導向到會員資料
-            session["username"]=username
-            return redirect("/member")
-        else:
-            print(user)
             return redirect("/error?msg=帳號密碼輸入錯誤")
-    return redirect("/error?msg=請輸入帳號密碼")
-
-
+        else:
+            session["name"]=name
+            return redirect("/member")
+    else:
+        # 資料庫無資料返回
+        return redirect("/error?msg=帳號密碼輸入錯誤")
 # 會員頁
 @app.route("/member/")
 def member():
-    username=session.get("username")
-    if "username" in session:
-        sql_name = "SELECT name FROM member WHERE username ='%s'"%(username)
-        cursor.execute(sql_name)
-        name=cursor.fetchone()
-        return render_template("member.html",name=name[0])
+    name=session.get("name")
+    if "name" in session:
+        return render_template("member.html",name=name)
     else:
         return redirect("/")
 
@@ -101,7 +91,7 @@ def member():
 @app.route("/signout")
 def signout():
     # 移除 session 中的會員資訊
-    del session["username"]
+    del session["name"]
     return redirect("/")
 
 app.run(port=3000)
