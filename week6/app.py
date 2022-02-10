@@ -1,7 +1,7 @@
 import mysql.connector
 from flask import *
 
-db = mysql.connector.connect(user='root',password='1qaz2wsx',host='localhost',database='member_system')
+db = mysql.connector.connect(user='root',password='',host='localhost',database='member_system')
 cursor = db.cursor()
 
 # 初始化 Flask 伺服器
