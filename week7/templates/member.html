@@ -10,7 +10,7 @@
     h1{flex:none;color:white;text-align: center;}
     h3{flex:none;text-align: center;}
     .search{display: flex;justify-content:center;}
-    .changeName{display: flex;justify-content:center;}
+    .changeUserName{display: flex;justify-content:center;}
     p{display: flex;justify-content:center;}
     </style>
     <script>
@@ -30,22 +30,23 @@
         .catch(error => console.error('Error:', error))
         }
         // 更名
-        function changeName(){
-        let changeName=document.getElementById('change').value;
+        function changeUserName(){
+        let changeUserName=document.getElementById('change').value;
         fetch('/api/member', {
             //連線方法:POST
             method: 'POST',
             //標頭格式:JSON 
             headers: new Headers({'Content-Type': 'application/json'}),
-            //內容JSON格式變成字串格式
-            body: JSON.stringify({"name":changeName}),
+            //內容JSON格式變成字串格式，change帶入剛剛getElementById抓的的值
+            body: JSON.stringify({"name":changeUserName}),
             })
             .then(function(response){ return response.json()})
             .then(function(response){
         if(response["OK"]==true){
             //更新成功，替換登錄姓名
             document.getElementById("new2").innerHTML="更新成功";
-            document.getElementById("newName").innerHTML = changeName+'，歡迎登入系統';
+            //更新新的用戶名稱於左上角
+            document.getElementById("newName").innerHTML = changeUserName+'，歡迎登入系統';
             }
         else{document.getElementById("new2").innerHTML="更新失敗"}  
         })
@@ -69,9 +70,11 @@
     <p id="new1"></p>
 
     <h3>更新我的姓名</h3>
-    <div class="changeName">
-    <input type="text" id="change" name="changeName" placeholder="輸入新的姓名">
-    <input type="submit" id="btn" value="更新" onclick="changeName()"><br/>
+    <div class="changeUserName">
+    <!--name="changeUserName給getElementById抓取值用"，placeholder提示輸入內容-->
+    <input type="text" id="change" name="change" placeholder="輸入新的帳號名稱">        
+    <!--onclick="changeUserName啟動更名"-->
+    <input type="submit" id="btn" value="更新" onclick="changeUserName()"><br/>
     </div>
     <p id="new2"></p>
  
