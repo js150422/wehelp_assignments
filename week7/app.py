@@ -18,7 +18,7 @@ def changeUserNamef(newUserName):
         # 更新
         cursor.execute("UPDATE member SET username='%s' WHERE username='%s'"% (newUserName,username))
         db.commit()
-        # 搜尋的道才代表更改成功
+        # 搜尋的到才代表更改成功
         result=searchUserName(newUserName)
         if result!=[]:
             # 轉成json格式
