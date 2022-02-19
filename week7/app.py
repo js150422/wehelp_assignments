@@ -13,21 +13,17 @@ app.secret_key="any string but secret"
 # 更名
 def changeUserNamef(newUserName):
     # session有紀錄才能更名，且用session紀錄的name改名
-    if "name" in session:
-        # 用name搜尋username
-        name=session.get("name")
-        # 名子抓帳號資訊
-        result=searchUserName_fn(name)
-        username=result[0][2]
+    if "username" in session:
+        username=session.get("username")
         # 更新
         cursor.execute("UPDATE member SET username='%s' WHERE username='%s'"% (newUserName,username))
         db.commit()
-        # 用心的username搜尋
+        # 搜尋的道才代表更改成功
         result=searchUserName(newUserName)
-        # 用新帳號找的到且搜尋到的name跟session相同
         if result!=[]:
             # 轉成json格式
             data=json.dumps({"OK":result[0][2]==newUserName})
+            session["username"]=result[0][2]
             return data
 
         else:
@@ -42,14 +38,6 @@ def searchUserName(username):
     cursor.execute(sql_search)
     search_Result = cursor.fetchall()
     return search_Result
-
-# 搜尋name
-def searchUserName_fn(name):
-    sql_search2 = "SELECT id,name,username,password FROM member WHERE name ='%s'"%(name)
-    cursor.execute(sql_search2)
-    search_Result = cursor.fetchall()
-    return search_Result
-
         
 # 首頁
 @app.route("/")
@@ -97,7 +85,7 @@ def signin():
             return redirect("/error?msg=帳號密碼輸入錯誤")
         else:
             # 登入成功，在 Session 記錄會員資訊，導向到會員資料
-            session["name"]=result[0][1]
+            session["username"]=result[0][2]
             return redirect("/member")
     else:
         return redirect("/error?msg=請輸入帳號密碼")
@@ -105,10 +93,10 @@ def signin():
 # 會員頁
 @app.route("/member/")
 def member():
-    name=session.get("name")
-    if "name" in session:
-        # 使用者名稱顯示在member頁面name=name及頁面設定{{ name }}
-        return render_template("member.html",name=name)
+    username=session.get("username")
+    if "username" in session:
+        # 使用者名稱顯示在member頁面name=name及頁面設定{{ username }}
+        return render_template("member.html",username=username)
 
     else:
         return redirect("/")
