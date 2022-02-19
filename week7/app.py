@@ -11,19 +11,18 @@ app = Flask(__name__,static_folder="public",static_url_path="/")
 app.secret_key="any string but secret"
 
 # 更名
-def changeUserNamef(newUserName):
-    # session有紀錄才能更名，且用session紀錄的name改名
+def changeNamef(newName):
+    # session有紀錄才能更名，且用session紀錄的username改名
     if "username" in session:
         username=session.get("username")
         # 更新
-        cursor.execute("UPDATE member SET username='%s' WHERE username='%s'"% (newUserName,username))
+        cursor.execute("UPDATE member SET name='%s' WHERE username='%s'"% (newName,username))
         db.commit()
-        # 搜尋的到才代表更改成功
-        result=searchUserName(newUserName)
+        # 搜尋的道才代表更改成功
+        result=searchUserName(username)
         if result!=[]:
             # 轉成json格式
-            data=json.dumps({"OK":result[0][2]==newUserName})
-            session["username"]=result[0][2]
+            data=json.dumps({"OK":result[0][1]==newName})
             return data
 
         else:
@@ -38,6 +37,8 @@ def searchUserName(username):
     cursor.execute(sql_search)
     search_Result = cursor.fetchall()
     return search_Result
+
+
         
 # 首頁
 @app.route("/")
@@ -94,9 +95,12 @@ def signin():
 @app.route("/member/")
 def member():
     username=session.get("username")
+    result=searchUserName(username)
+    name=result[0][1]
+
     if "username" in session:
-        # 使用者名稱顯示在member頁面name=name及頁面設定{{ username }}
-        return render_template("member.html",username=username)
+        # 使用者名稱顯示在member頁面name=name及頁面設定{{ name }}
+        return render_template("member.html",name=name)
 
     else:
         return redirect("/")
@@ -128,27 +132,22 @@ def apiChangeUserName():
     if request.content_type!= "application/json":
         return Response(response="錯誤的格式", status=400)
 
-    # 抓取api進入的資料
-    api_changeUserName=request.get_json()
-    # 抓取member.html網頁提交的更新資料，input的屬性name屬性
-    htm_changeUserName=request.args.get("changeUserName")
+    # html透過練縣api/member並利用JSON.stringify{"name":changeUserName}資料
+    # api 將資料帶入{"name":newname}
+    api_changeName=request.get_json()
 
-
-    if api_changeUserName!=None:
+    if api_changeName!=None:
         #api的"name"帶入
-        newUserName=api_changeUserName['name']
-    elif htm_changeUserName!=None:
-        newUserName=htm_changeUserName
+        newName=api_changeName['name']
     else:
         return "沒有要更新的資料"
-    return changeUserNamef(newUserName)
-
-
+    return changeNamef(newName)
+    
 # 登出
 @app.route("/signout")
 def signout():
     # 移除 session 中的會員資訊
-    del session["name"]
+    del session["username"]
     return redirect("/")
 
 app.run(port=3000)
