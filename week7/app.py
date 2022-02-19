@@ -11,18 +11,23 @@ app = Flask(__name__,static_folder="public",static_url_path="/")
 app.secret_key="any string but secret"
 
 # 更名
-def changeNamef(newName):
+def changeUserNamef(newUserName):
+    # session有紀錄才能更名，且用session紀錄的name改名
     if "name" in session:
+        # 用name搜尋username
         name=session.get("name")
-        cursor.execute("UPDATE member SET name='%s' WHERE name='%s'"% (newName,name))
+        # 名子抓帳號資訊
+        result=searchUserName_fn(name)
+        username=result[0][2]
+        # 更新
+        cursor.execute("UPDATE member SET username='%s' WHERE username='%s'"% (newUserName,username))
         db.commit()
-        result=searchName(newName)
-        # 沒有相同的名字會傳空[]
+        # 用心的username搜尋
+        result=searchUserName(newUserName)
+        # 用新帳號找的到且搜尋到的name跟session相同
         if result!=[]:
-            # 資料傳出來的形式[(xxx)]
-            session["name"]=result[0][1]
             # 轉成json格式
-            data=json.dumps({"OK":result[0][1]==newName})
+            data=json.dumps({"OK":result[0][2]==newUserName})
             return data
 
         else:
@@ -32,14 +37,14 @@ def changeNamef(newName):
         return "請重新登入"
 
 # 搜尋username
-def searchUsername(username):
+def searchUserName(username):
     sql_search = "SELECT id,name,username,password FROM member WHERE username ='%s'"%(username)
     cursor.execute(sql_search)
     search_Result = cursor.fetchall()
     return search_Result
 
 # 搜尋name
-def searchName(name):
+def searchUserName_fn(name):
     sql_search2 = "SELECT id,name,username,password FROM member WHERE name ='%s'"%(name)
     cursor.execute(sql_search2)
     search_Result = cursor.fetchall()
@@ -64,7 +69,7 @@ def signup():
     signup_name=request.form["name"]
     signup_username=request.form["username"]
     signup_password=request.form["password"]
-    result=searchUsername(signup_username)
+    result=searchUserName(signup_username)
     # 輸入的name跟username不是空值的話
     if signup_name!="" and signup_username!="" and signup_password!="":
         # 搜尋註冊的usernam有沒有存在在資料庫裏面
@@ -85,7 +90,7 @@ def signin():
     # 從前端取得使用者的輸入
     signin_username=request.form["username"]
     signin_password=request.form["password"]
-    result=searchUsername(signin_username)
+    result=searchUserName(signin_username)
     if result!=[]:
         # 帳號跟密碼任意一個不對
         if result[0][2]!=signin_username or result[0][3]!=signin_password:
@@ -113,7 +118,7 @@ def member():
 def apiSearchMembers():
     # 從api來的查詢request
     api_search_Uename=request.args.get("username")    # 搜尋使用名稱是否在資料庫中
-    result=searchUsername(api_search_Uename)
+    result=searchUserName(api_search_Uename)
     if result!=[]:
         headers=[x[0] for x in cursor.description] # 抓取表頭資訊
         #0-id、1-name、2-username
@@ -136,18 +141,19 @@ def apiChangeUserName():
         return Response(response="錯誤的格式", status=400)
 
     # 抓取api進入的資料
-    api_changeName=request.get_json()
-    # 抓取member.html網頁提交的更新資料
-    htm_changeName=request.args.get("name")
+    api_changeUserName=request.get_json()
+    # 抓取member.html網頁提交的更新資料，input的屬性name屬性
+    htm_changeUserName=request.args.get("changeUserName")
 
 
-    if api_changeName!=None:
-        newName=api_changeName['name']
-    elif htm_changeName!=None:
-        newName=htm_changeName
+    if api_changeUserName!=None:
+        #api的"name"帶入
+        newUserName=api_changeUserName['name']
+    elif htm_changeUserName!=None:
+        newUserName=htm_changeUserName
     else:
         return "沒有要更新的資料"
-    return changeNamef(newName)
+    return changeUserNamef(newUserName)
 
 
 # 登出
