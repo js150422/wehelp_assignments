@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>week6</title>
+    <style>
+    .welcome{display: flex;justify-content:center;align-items: center;background-color:#375476;height:100px;}
+    .login{display: flex;justify-content:center;align-items: center;}
+    .signout{display: flex;justify-content:center;}
+    h1{flex:none;color:white;text-align: center;}
+    h3{flex:none;text-align: center;}
+    .search{display: flex;justify-content:center;}
+    .changeName{display: flex;justify-content:center;}
+    p{display: flex;justify-content:center;}
+    </style>
+    <script>
+        // 搜尋
+        function searchName(){
+        const search=document.getElementById('search').value;
+        fetch('/api/members?username='+search)
+        .then(function(response){return response.json();})
+        .then(function (response) {
+        if (response["data"]!=null){
+            result=response["data"]["name"]
+            // 替換顯示區
+            document.getElementById("new1").innerHTML =result+'('+search+')';
+            }
+        else{document.getElementById("new1").innerHTML = "查無此人";}
+        })
+        .catch(error => console.error('Error:', error))
+        }
+        // 更名
+        function changeName(){
+        let changeName=document.getElementById('change').value;
+        fetch('/api/member', {
+            //連線方法:POST
+            method: 'POST',
+            //標頭格式:JSON 
+            headers: new Headers({'Content-Type': 'application/json'}),
+            //內容JSON格式變成字串格式
+            body: JSON.stringify({"name":changeName}),
+            })
+            .then(function(response){ return response.json()})
+            .then(function(response){
+        if(response["OK"]==true){
+            //更新成功，替換登錄姓名
+            document.getElementById("new2").innerHTML="更新成功";
+            document.getElementById("newName").innerHTML = changeName+'，歡迎登入系統';
+            }
+        else{document.getElementById("new2").innerHTML="更新失敗"}  
+        })
+        .catch (function (error) {console.log('Request failed', error);})
+    
+        }
+    </script>
+
+</head>
+<body>
+    <div class="welcome"><h1>歡迎光臨，這是會員頁</h1></div>
+    <div class="login"><h2 id="newName">{{ name }}，歡迎登入系統</h2></div>
+    <div class="signout">
+    <a href="/signout">登出系統</a>
+    </div>
+    <h3>查詢會員系統</h3>
+    <div class="search">
+    <input type="text" id="search" placeholder="請輸入姓名">
+    <input type="submit" value="查詢" onclick="searchName()"><br/>
+    </div>
+    <p id="new1"></p>
+
+    <h3>更新我的姓名</h3>
+    <div class="changeName">
+    <input type="text" id="change" name="changeName" placeholder="輸入新的姓名">
+    <input type="submit" id="btn" value="更新" onclick="changeName()"><br/>
+    </div>
+    <p id="new2"></p>
+ 
+</body>
+</html>
