@@ -12,7 +12,7 @@ app.secret_key="any string but secret"
 
 # 更名
 def changeNamef(newName):
-    # session有紀錄才能更名，且用session紀錄的username改名
+    # session有紀錄才能更名，用username去改name
     if "username" in session:
         username=session.get("username")
         # 更新
